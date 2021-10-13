@@ -1,27 +1,17 @@
-import {useState, useEffect} from "react";
-import axios from "axios";
+
 import Book from "./Book"
 
-function ContentOutput() {
-
-    const [books, setBooks] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:3005/books')
-        .then((response) => {
-            setBooks(response.data);
-        },[])
-    });
+function ContentOutput({books}) {
 
     return (
         <>
-            <div class="container">
-                <div class="row">
-                    {books.map(book => <Book/>)}
+            <div className="container">
+                <div className="row">
+                    {books.map(book => <Book key={book.id} book={book}/>)}
                 </div>
             </div>
         </>
     )
-}
+};
 
 export default ContentOutput;
