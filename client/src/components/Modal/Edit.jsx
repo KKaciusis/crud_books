@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function BookInput({ addBook }) {
+function Edit({ id, book, editBook, hideModal }) {
 
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [category, setCategory] = useState('');
     const [pages, setPages] = useState('');
+
+    useEffect(() => {
+        setTitle(book.title);
+        setAuthor(book.author);
+        setCategory(book.category);
+        setPages(book.pages);
+    }, [id]);
 
     const control = (e, what) => {
         switch (what) {
@@ -24,51 +31,56 @@ function BookInput({ addBook }) {
         }
     };
 
-    const insertBook = () => {
-        addBook({
+    const edit = () => {
+        editBook(id, {
             title: title,
             author: author,
             category: category,
             pages: pages,
         })
+        hideModal()
         setTitle('')
         setAuthor('')
         setCategory('')
         setPages('')
     };
 
+    if (id === 0){
+        return null;
+    }
+
     return (
-        <>
+        <div className="modalas">
             <div className="container">
                 <div className="row">
                     <div className="col-8">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">New Book</h5>
+                                <h5 className="card-title">Edit Book</h5>
                                 <div className="form-group">
                                     <label >Title</label>
-                                    <input type="text" className="form-control" placeholder="Enter Title" onChange={(e) => control(e, 'title')} value={title} />
+                                    <input type="text" className="form-control" placeholder="Enter New Title" onChange={(e) => control(e, 'title')} value={title} />
                                 </div>
                                 <div className="form-group">
                                     <label >Author</label>
-                                    <input type="text" className="form-control" placeholder="Enter Author Name" onChange={e => control(e, 'author')} value={author} />
+                                    <input type="text" className="form-control" placeholder="Enter New Author Name" onChange={e => control(e, 'author')} value={author} />
                                 </div>
                                 <div className="form-group">
                                     <label >Category</label>
-                                    <input type="text" className="form-control" placeholder="Enter Category" onChange={(e) => control(e, 'category')} value={category} />
+                                    <input type="text" className="form-control" placeholder="Enter New Category" onChange={(e) => control(e, 'category')} value={category} />
                                 </div>
                                 <div className="form-group">
                                     <label >Pages</label>
-                                    <input type="text" className="form-control" placeholder="Enter Page Count" onChange={(e) => control(e, 'pages')} value={pages} />
+                                    <input type="text" className="form-control" placeholder="Enter New Page Count" onChange={(e) => control(e, 'pages')} value={pages} />
                                 </div>
-                                <button type="button" className="btn btn-light" onClick={insertBook}>SUBMIT BOOK</button>
+                                <button type="button" className="btn btn-warning" onClick={edit}>EDIT BOOK</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
-export default BookInput;
+export default Edit;

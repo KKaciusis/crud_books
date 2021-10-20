@@ -1,13 +1,12 @@
-
 import Book from "./Book"
 
-function ContentOutput({books}) {
+function ContentOutput({books, deleteBook, showModal}) {
 
     return (
         <>
             <div className="container">
-                <div className="row">
-                    {books.map(book => <Book key={book.id} book={book}/>)}
+                <div className="row m-3">
+                    {books.map(book => <Book key={book.id} book={book} deleteBook={deleteBook} showModal={showModal}/>)}
                 </div>
             </div>
         </>

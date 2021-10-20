@@ -1,14 +1,20 @@
 
 
-function Book({ book }) {
+function Book({ book, deleteBook, showModal }) {
     return (
-        <div className="col-4">
-            <div className="card">
+        <div className="col-lg-4 col-md-6">
+            <div className="card m-3">
                 <img src="..." className="card-img-top" alt="..."/>
                     <div className="card-body">
                         <h5 className="card-title">{book.title}</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                        <h6 className="card-title">{book.author}</h6>
+                        <span className="badge badge-secondary m-1">Category:&nbsp; {book.category}</span>
+                        <span className="badge badge-secondary m-1">Pages:&nbsp; {book.pages}</span>
+
+                        <div className="form-group mt-2">
+                        <button type="button" className="btn btn-warning" onClick={()=>deleteBook(book.id)}>Delete</button>
+                        <button type="button" className="btn btn-warning" onClick={()=>showModal(book.id)}>Edit</button>
+                        </div>
                     </div>
             </div>
         </div>

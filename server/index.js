@@ -33,7 +33,7 @@ app.post('/api/books', (request, response) => {
         console.log(request.body)
         
         database.query(QUERY_INSERT, VALUES, (error, result) => {
-            console.log(error);
+            response.send(result);
     })
 })
 
@@ -41,27 +41,25 @@ app.get('/api/books', (request, response) => {
     const QUERY_SELECT = "SELECT * FROM book_table";
 
     database.query(QUERY_SELECT, (error, result) =>{
-        console.log(result);
-
-        response.json(result);
-    });
+        response.send(result);
+    })
 });
 
-app.delete("/api/cows/:id", (request, response) => {
-    const QUERY_DELETE = "DELETE FROM cow_tier WHERE id=" + request.params.id;
+app.delete("/api/books:id", (request, response) => {
+    const QUERY_DELETE = "DELETE FROM book_table WHERE id=" + request.params.id;
     
     database.query(QUERY_DELETE, [], (error, result) => {
-        console.log(error);
+        response.send(result);
     })
 });
 
 
-app.put('/api/cows', (request, response) =>{
-    const QUERY_UPDATE = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";
-    const VALUES = [request.body.newFavoriteSnack, request.body.newMilkProduction, request.body.cowName];
+app.put('/api/books:id', (request, response) =>{
+    const QUERY_UPDATE = "UPDATE book_table SET title = ?, author = ?, category = ?, pages = ? WHERE id=" + request.params.id;
+    const VALUES = [request.body.title, request.body.author, request.body.category, request.body.pages];
     
     database.query(QUERY_UPDATE, VALUES, (error, result) => {
-        console.log(error);
+        response.send(result)
     })
 });
 
