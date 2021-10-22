@@ -11,11 +11,19 @@ function App() {
     const [books, setBooks] = useState([]);
     const [lastUpdate, setLastUpdate] = useState(Date.now())
     const [modalId, setModalId] = useState(0);
+    const [booksCount, setBooksCount] = useState(0);
 
     useEffect(() => {
         axios.get('http://localhost:3005/api/books')
             .then((response) => {
                 setBooks(response.data);
+            })
+    }, [lastUpdate])
+
+    useEffect(() => {
+        axios.get('http://localhost:3005/api/books/count')
+            .then((response) => {
+                setBooksCount(response.data);
             })
     }, [lastUpdate])
 
@@ -60,9 +68,28 @@ function App() {
         setModalId(0)
     }
 
+    const sort = by => {
+        const booksCopy = books.slice();
+        if ('title' === by){
+            booksCopy.sort((a, b) => {
+                if (a.title > b.title){
+                    return 1;
+                }
+                if (a.title < b.title){
+                    return -1;
+                }
+                return 0;
+            });
+        }
+            if ('pages' === by) {
+                booksCopy.sort((a, b) => a.pages - b.pages);
+            }
+            setBooks(booksCopy);
+    };
+
     return (
         <>
-            <TopBar/>
+            <TopBar sort={sort}/>
             <BookInput addBook={addBook} deleteBook={deleteBook}/>
             <ContentOutput books={books} deleteBook={deleteBook} showModal={showModal}/>
             <Edit id={modalId} book={getBook(modalId)} editBook={editBook} hideModal={hideModal}/>

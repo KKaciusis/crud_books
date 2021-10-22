@@ -12,7 +12,7 @@ function Book({ book, deleteBook, showModal }) {
                         <span className="badge badge-secondary m-1">Pages:&nbsp; {book.pages}</span>
 
                         <div className="form-group mt-2">
-                        <button type="button" className="btn btn-warning" onClick={()=>deleteBook(book.id)}>Delete</button>
+                        <button type="button" className="btn btn-warning m-2" onClick={()=>deleteBook(book.id)}>Delete</button>
                         <button type="button" className="btn btn-warning" onClick={()=>showModal(book.id)}>Edit</button>
                         </div>
                     </div>

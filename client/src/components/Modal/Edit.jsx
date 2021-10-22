@@ -74,6 +74,7 @@ function Edit({ id, book, editBook, hideModal }) {
                                     <input type="text" className="form-control" placeholder="Enter New Page Count" onChange={(e) => control(e, 'pages')} value={pages} />
                                 </div>
                                 <button type="button" className="btn btn-warning" onClick={edit}>EDIT BOOK</button>
+                                <button type="button" className="btn btn-info cancelBtn" onClick={hideModal}>CANCEL</button>
                             </div>
                         </div>
                     </div>

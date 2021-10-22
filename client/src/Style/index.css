@@ -23,3 +23,6 @@ code {
   display: flex;
   justify-content: center;
 }
+.cancelBtn{
+  margin: 10px;
+}
