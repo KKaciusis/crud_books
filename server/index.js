@@ -45,6 +45,22 @@ app.get('/api/books', (request, response) => {
     })
 });
 
+app.get('/api/books/count', (request, response) => {
+    const QUERY_SELECT = "SELECT COUNT(id) AS booksCount FROM book_table";
+
+    database.query(QUERY_SELECT, (error, result) =>{
+        response.send(result);
+    })
+});
+
+app.get('/api/books/cat-count', (request, response) => {
+    const QUERY_SELECT = `SELECT COUNT(id) AS count, category FROM book_table GROUP BY category ORDER BY COUNT(id) DESC`;
+
+    database.query(QUERY_SELECT, (error, result) =>{
+        response.send(result);
+    })
+});
+
 app.delete("/api/books:id", (request, response) => {
     const QUERY_DELETE = "DELETE FROM book_table WHERE id=" + request.params.id;
     

@@ -12,6 +12,7 @@ function App() {
     const [lastUpdate, setLastUpdate] = useState(Date.now())
     const [modalId, setModalId] = useState(0);
     const [booksCount, setBooksCount] = useState(0);
+    const [catCount, setCatCount] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:3005/api/books')
@@ -23,7 +24,14 @@ function App() {
     useEffect(() => {
         axios.get('http://localhost:3005/api/books/count')
             .then((response) => {
-                setBooksCount(response.data);
+                setBooksCount(response.data[0].booksCount);
+            })
+    }, [lastUpdate])
+
+    useEffect(() => {
+        axios.get('http://localhost:3005/api/books/cat-count')
+            .then((response) => {
+                setCatCount(response.data)
             })
     }, [lastUpdate])
 
@@ -50,7 +58,12 @@ function App() {
 
     const getBook = id => {
         if (id === 0){
-            return [];
+            return {
+                title: '',
+                author: '',
+                category: '',
+                pages: '',
+            };
         }
 
         for(let i = 0; i < books.length; i++){
@@ -89,7 +102,7 @@ function App() {
 
     return (
         <>
-            <TopBar sort={sort}/>
+            <TopBar sort={sort} catCount={catCount} allBooks={booksCount}/>
             <BookInput addBook={addBook} deleteBook={deleteBook}/>
             <ContentOutput books={books} deleteBook={deleteBook} showModal={showModal}/>
             <Edit id={modalId} book={getBook(modalId)} editBook={editBook} hideModal={hideModal}/>

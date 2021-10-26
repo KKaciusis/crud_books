@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as yup from "yup";
 
 function BookInput({ addBook }) {
 
@@ -25,7 +26,7 @@ function BookInput({ addBook }) {
     };
 
     const insertBook = () => {
-        addBook({
+       addBook({
             title: title,
             author: author,
             category: category,

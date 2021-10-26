@@ -1,6 +1,6 @@
 
 
-function TopBar({sort, allBooks}) {
+function TopBar({sort, allBooks, catCount}) {
     return (
         <>
             <div className="container">
@@ -19,6 +19,8 @@ function TopBar({sort, allBooks}) {
                         <div className="card-body">
                             <h5 className="card-title">Statistics</h5>
                             <h6>Books count: {allBooks}</h6>
+                            {catCount.map(cat => <h6 key={cat.category}>{cat.category}: {cat.count}</h6>)}
+
                         </div>
                         </div>
                     </div>
